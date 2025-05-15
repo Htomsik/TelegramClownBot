@@ -1,0 +1,16 @@
+*obj/
+*bin/
+*/obj/
+*/bin/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+**/wwwroot/lib
+**/wwwroot/lib-*
+**/wwwroot/css
+/.idea/
+*.idea/
+logs/
+*.db*
+*.DotSettings*
+*MigrationPlan.md*

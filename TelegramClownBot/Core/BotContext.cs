@@ -9,15 +9,41 @@ namespace TelegramClownBot.Core
 {
     public class BotContext : ApplicationContext
     {
-        public Client? TelegramClient { get; set; }
-        public User? Me { get; set; }
-        public List<TelegramUser> Users { get; set; } = new();
-        public SelectionService<TelegramUser> ClownSelectionService { get; set; }
-        public bool IsAuthorized { get; set; } = false;
+        /// <summary>
+        ///     PERMANENT TG Authorization dataset
+        /// </summary>
+        public AuthorizationData AuthorizationData { get; set; }
         
-        public BotContext()
+        /// <summary>
+        ///     TEMPORARY application setiings
+        /// </summary>
+        public AppSettings Settings { get; }
+        
+        
+        /// <summary>
+        ///     Api client for TG operations
+        /// </summary>
+        public Client? TelegramClient { get; set; }
+        
+        /// <summary>
+        ///     CurrentUser
+        /// </summary>
+        public User? Me { get; set; }
+        
+        /// <summary>
+        ///     Contact list
+        /// </summary>
+        public List<TelegramUser> Users { get; set; } = new();
+        
+        /// <summary>
+        ///     Clown contact list
+        /// </summary>
+        public SelectionService<TelegramUser> ClownSelectionService { get; set; } = new SelectionService<TelegramUser>(new List<TelegramUser>());
+        
+        public BotContext(AppSettings settings, AuthorizationData authorizationData)
         {
-            ClownSelectionService = new SelectionService<TelegramUser>(Users);
+            Settings = settings;
+            AuthorizationData = authorizationData;
         }
     }
 } 

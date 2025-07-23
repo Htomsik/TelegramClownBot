@@ -37,9 +37,6 @@ namespace TelegramClownBot.Services
                 if (_context.Me == null)
                     return false;
                 
-                // Successful authorization
-                _context.IsAuthorized = true;
-                
                 return true;
             }
             catch
@@ -53,15 +50,14 @@ namespace TelegramClownBot.Services
         {
             switch (what)
             {
-                case "api_id": return "";
-                case "api_hash": return "";
-                case "phone_number": return "";
-                case "verification_code": return GetData("Verification сode").Result;
-                case "password": return "";
+                case "api_id": return _context.AuthorizationData.ApiId;
+                case "api_hash": return _context.AuthorizationData.ApiHash;
+                case "password":  return _context.AuthorizationData.Password;
+                case "phone_number": return _context.AuthorizationData.PhoneNumber;
+                case "verification_code": return GetData("verification_code").Result;
                 default: return null;  
             }
         }
-        
         private async Task<string?> GetData(string what)
         {
             _textInputCommand.Title = what;

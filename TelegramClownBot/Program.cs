@@ -14,8 +14,22 @@ namespace TelegramClownBot
     {
         static async Task Main(string[] args)
         {
-            // Create global application context
-            var context = new BotContext();
+            // Authorization information for TG
+            var authorizationData = new AuthorizationData(
+                "", //YOUR_API_ID
+                "", //YOUR_API_HASH
+                "", //YOUR_PHONE_NUMBER (+111.... Formate)
+                "" //YOUR_PASSWORD
+            );
+            
+            // Application Settings
+            var appSettings = new AppSettings(
+                "Chomyske", // Sticker set name
+                "🍜", // Sticker emoji in set
+                "🤡"); // Emoji to reaction on message
+            
+            // Global application context
+            var context = new BotContext(appSettings, authorizationData);
             
             // Disable WTelegram library logging
             Helpers.Log = (lvl, str) => { };

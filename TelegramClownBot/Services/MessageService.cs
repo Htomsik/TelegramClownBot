@@ -30,6 +30,8 @@ namespace TelegramClownBot.Services
         public async Task SendStickerMessageAsync(User? targetUser, string stickerSetName, string stickerEmotion)
         {
             if (_context.TelegramClient is null 
+                || string.IsNullOrWhiteSpace(stickerSetName)
+                || string.IsNullOrWhiteSpace(stickerEmotion)
                 || targetUser is null  
                 || targetUser.ID == 0)
                 return;
@@ -95,8 +97,8 @@ namespace TelegramClownBot.Services
                 !_context.ClownSelectionService.IsSelected(user, userSelect => user.Id == userSelect.Id))
                 return;
             
-            var stickerTask = SendStickerMessageAsync(user.OriginalUser, "Chomyske", "🍜");
-            var reactionTask = SendMessageReactionAsync(unm.message.ID, "🤡");
+            var stickerTask = SendStickerMessageAsync(user.OriginalUser, _context.Settings.PingStickerSetName, _context.Settings.PingStickerEmoji);
+            var reactionTask = SendMessageReactionAsync(unm.message.ID, _context.Settings.ReactionEmoji);
             
             await Task.WhenAll(stickerTask, reactionTask);
         }

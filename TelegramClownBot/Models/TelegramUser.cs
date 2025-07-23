@@ -14,9 +14,12 @@ namespace TelegramClownBot.Models
         public string DisplayName => string.IsNullOrEmpty(Username) 
             ? FullName 
             : $"{FullName} (@{Username})";
-            
+        
+        public User OriginalUser { get; init; }
+        
         public TelegramUser(User user)
         {
+            OriginalUser = user;
             Id = user.id;
             Username = user.username ?? string.Empty;
             FirstName = user.first_name ?? string.Empty;

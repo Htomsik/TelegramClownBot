@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using LiteTUI.Commands;
+﻿using LiteTUI.Commands;
+using LiteTUI.Controls.Menu;
 using LiteTUI.Core;
-using LiteTUI.Models;
 using TelegramClownBot.Commands;
 using TelegramClownBot.Core;
 using TelegramClownBot.Models;
@@ -23,7 +21,7 @@ namespace TelegramClownBot
             Helpers.Log = (lvl, str) => { };
             
             // Create services directly
-            IAuthService authService = new AuthService(context);
+            IAuthService authService = new AuthService(context, new TextInputCommand(context));
             IMessageService messageService = new MessageService(context);
             IUserService userService = new UserService(context);
             
@@ -40,12 +38,12 @@ namespace TelegramClownBot
                 context.ClownSelectionService,
                 "Select users for clown reaction",
                 user => user.DisplayName,  // function to get item text
-                new ChangeMenuCommand(context, mainMenu)  // back command
+                new ChangeControlCommand(context, mainMenu)  // back command
             );
             
             // Add command to navigate to user management menu
-            mainMenu.Items.Add(new MenuItem("Manage user list", 
-                new ChangeMenuCommand(context, clownsMenu)));
+            mainMenu.Items.Add(new MenuItem("Clowns reaction user list", 
+                new ChangeControlCommand(context, clownsMenu)));
             
             // Add exit command
             mainMenu.Items.Add(new MenuItem("Exit", new ExitCommand(context)));

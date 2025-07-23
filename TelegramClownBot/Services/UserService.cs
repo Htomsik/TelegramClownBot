@@ -36,6 +36,7 @@ namespace TelegramClownBot.Services
                 var user = dialogs.users[peerUser.user_id];
                 var telegramUser = new TelegramUser(user);
                 _context.Users.Add(telegramUser);
+                _context.ClownSelectionService.SelectedItems.Add(telegramUser);
                 
                 // Restore selection if user was selected before
                 if (selectedUsers.Contains(telegramUser))

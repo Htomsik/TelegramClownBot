@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using LiteTUI.Commands;
 using TelegramClownBot.Core;
 using TelegramClownBot.Services.Interfaces;
 using TL;
@@ -11,9 +12,12 @@ namespace TelegramClownBot.Services
     {
         private readonly BotContext _context;
         
-        public AuthService(BotContext context)
+        private readonly TextInputCommand _textInputCommand;
+
+        public AuthService(BotContext context, TextInputCommand textInputCommand)
         {
             _context = context;
+            _textInputCommand = textInputCommand;
         }
         
         public async Task<bool> AuthorizeAsync()
@@ -45,17 +49,23 @@ namespace TelegramClownBot.Services
         }
         
         // Configuration for Telegram authorization
-        private static string Config(string what)
+        private string? Config(string what)
         {
             switch (what)
             {
                 case "api_id": return "";
                 case "api_hash": return "";
                 case "phone_number": return "";
-                case "verification_code": Console.Write("Code: "); return Console.ReadLine();
-                case "password": return ""; 
+                case "verification_code": return GetData("Verification сode").Result;
+                case "password": return "";
                 default: return null;  
             }
+        }
+        
+        private async Task<string?> GetData(string what)
+        {
+            _textInputCommand.Title = what;
+            return await _textInputCommand.ExecuteAsync();
         }
     }
 } 

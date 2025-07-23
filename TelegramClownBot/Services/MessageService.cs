@@ -50,7 +50,7 @@ namespace TelegramClownBot.Services
             var user = _context.Users.FirstOrDefault(u => u.Id == message.From.ID);
             
             // Check if the user is selected in the selection service
-            if (user == null || _context.ClownSelectionService.IsSelected(user))
+            if (user == null || !_context.ClownSelectionService.IsSelected(user, userSelect => user.Id == userSelect.Id))
                     return;
             
             // Send clown reaction

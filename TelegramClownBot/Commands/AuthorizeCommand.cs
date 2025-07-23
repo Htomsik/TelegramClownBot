@@ -6,7 +6,7 @@ using TelegramClownBot.Services.Interfaces;
 
 namespace TelegramClownBot.Commands
 {
-    public class AuthorizeCommand : CommandBase
+    public class AuthorizeCommand : CommandBase<bool>
     {
         private readonly BotContext _botContext;
         private readonly IAuthService _authService;

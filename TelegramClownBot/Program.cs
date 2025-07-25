@@ -18,7 +18,7 @@ namespace TelegramClownBot
             var authorizationData = new AuthorizationData(
                 "", //YOUR_API_ID
                 "", //YOUR_API_HASH
-                "", //YOUR_PHONE_NUMBER (+111.... Formate)
+                "+", //YOUR_PHONE_NUMBER (+111.... Formate)
                 "" //YOUR_PASSWORD
             );
             

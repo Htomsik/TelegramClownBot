@@ -38,7 +38,7 @@ namespace TelegramClownBot.Core
         /// <summary>
         ///     Clown contact list
         /// </summary>
-        public SelectionService<TelegramUser> ClownSelectionService { get; set; } = new SelectionService<TelegramUser>(new List<TelegramUser>());
+        public SelectionService<TelegramUser> ClownSelectionService { get; set; }  = new SelectionService<TelegramUser>();
         
         public BotContext(AppSettings settings, AuthorizationData authorizationData)
         {

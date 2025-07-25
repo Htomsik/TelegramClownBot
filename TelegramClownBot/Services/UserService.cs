@@ -21,11 +21,11 @@ namespace TelegramClownBot.Services
             var dialogs = await _context.TelegramClient.Messages_GetAllDialogs();
             
             // Save IDs of currently selected users
-            var selectedUsers = _context.ClownSelectionService.SelectedItems;
+            var oldSelectedUsers =
+                _context.ClownSelectionService.Items.Where(user => _context.ClownSelectionService.IsSelected(user));
             
             // Clear users list and selection
             _context.Users.Clear();
-            _context.ClownSelectionService.SelectedItems.Clear();
             
             // Add all users from dialogs
             foreach (var dialog in dialogs.dialogs)
@@ -35,14 +35,16 @@ namespace TelegramClownBot.Services
                 
                 var user = dialogs.users[peerUser.user_id];
                 var telegramUser = new TelegramUser(user);
-                _context.Users.Add(telegramUser);
-                _context.ClownSelectionService.SelectedItems.Add(telegramUser);
                 
-                // Restore selection if user was selected before
-                if (selectedUsers.Contains(telegramUser))
-                {
-                    _context.ClownSelectionService.ToggleSelection(telegramUser);
-                }
+                _context.Users.Add(telegramUser);
+            }
+            
+            _context.ClownSelectionService.Items = _context.Users;
+            
+            // Restore Selection
+            foreach (var user in oldSelectedUsers)
+            {
+                _context.ClownSelectionService.ToggleSelection(user);
             }
         }
     }
